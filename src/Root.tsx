@@ -1,12 +1,22 @@
-import { Composition, registerRoot, Sequence, useVideoConfig, Audio, staticFile } from "remotion";
+import {
+  Composition,
+  registerRoot,
+  Sequence,
+  useVideoConfig,
+  Audio,
+  staticFile,
+  spring,
+  interpolate,
+  interpolateColors,
+  useCurrentFrame
+} from "remotion";
 import React from "react";
 
-// Định nghĩa cấu trúc dữ liệu từ file lesson.json để Type-safe
 interface Scene {
   id: string;
   text: string;
   durationInSeconds: number;
-  audioUrl?: string; // Tích hợp trường Audio sinh ra từ TTS
+  audioUrl?: string;
 }
 
 interface LessonProps {
@@ -14,72 +24,123 @@ interface LessonProps {
   scenes: Scene[];
 }
 
-// Component hiển thị nội dung chính của Video với Timeline động và Âm thanh
-const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
-  const { fps } = useVideoConfig();
+// Component cho từng Scene để dễ quản lý animation
+const SceneComponent: React.FC<{ scene: Scene }> = ({ scene }) => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
 
-  // Biến đếm frame bắt đầu cho từng scene
+  // Animation mượt mà cho việc xuất hiện: trượt từ dưới lên và mờ dần vào
+  const enterProgress = spring({
+    frame,
+    fps,
+    config: { damping: 12, stiffness: 80, mass: 0.8 },
+  });
+
+  const translateY = interpolate(enterProgress, [0, 1], [50, 0]);
+  const opacity = interpolate(enterProgress, [0, 1], [0, 1]);
+
+  // Animation nhỏ bé nhịp thở (scale mượt suốt thời gian của scene)
+  const scale = interpolate(
+    Math.sin(frame / 15),
+    [-1, 1],
+    [0.98, 1.02]
+  );
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        padding: "0 100px",
+        boxSizing: "border-box",
+      }}
+    >
+      <h2
+        style={{
+          fontSize: 60,
+          color: "#ffffff",
+          textAlign: "center",
+          textShadow: "2px 2px 10px rgba(0, 0, 0, 0.5)",
+          transform: `translateY(${translateY}px) scale(${scale})`,
+          opacity,
+          lineHeight: 1.5,
+          fontWeight: "bold",
+        }}
+      >
+        {scene.text}
+      </h2>
+    </div>
+  );
+};
+
+const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  // Hình nền động: đổi màu chậm rãi theo thời gian
+  const bgProgress = frame / durationInFrames;
+  const backgroundColor = interpolateColors(
+    bgProgress,
+    [0, 0.5, 1],
+    ["#1a1a2e", "#16213e", "#0f3460"]
+  );
+
   let currentStartFrame = 0;
 
   return (
     <div
       style={{
         flex: 1,
-        backgroundColor: "#000000",
+        backgroundColor,
         color: "#ffffff",
         display: "flex",
         flexDirection: "column",
-        fontFamily: "Helvetica, Arial, sans-serif",
+        fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       }}
     >
-      {/* Tiêu đề cố định ở trên */}
-      <div style={{ textAlign: "center", padding: 40, zIndex: 10 }}>
-        <h1>{lessonTitle}</h1>
+      {/* Tiêu đề xịn xò */}
+      <div style={{
+        textAlign: "center",
+        padding: "40px",
+        zIndex: 10,
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+      }}>
+        <h1 style={{
+          margin: 0,
+          fontSize: 80,
+          background: "-webkit-linear-gradient(#f39c12, #e74c3c)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"
+        }}>
+          {lessonTitle}
+        </h1>
       </div>
 
-      {/* Vùng hiển thị động cho từng scene */}
       <div
         style={{
           flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-          padding: 80,
           position: "relative",
+          overflow: "hidden",
         }}
       >
         {scenes.map((scene) => {
-          // Tính toán chính xác độ dài khung hình của scene hiện tại (bao gồm cả độ dài mp3 vừa tính toán)
-          const durationInFrames = Math.floor(scene.durationInSeconds * fps);
-
-          // Lưu lại điểm bắt đầu của scene này để render
+          const durationInFramesScene = Math.floor(scene.durationInSeconds * fps);
           const startFrame = currentStartFrame;
-
-          // Cộng dồn để lấy điểm bắt đầu cho scene tiếp theo
-          currentStartFrame += durationInFrames;
+          currentStartFrame += durationInFramesScene;
 
           return (
             <Sequence
               key={scene.id}
               from={startFrame}
-              durationInFrames={durationInFrames}
+              durationInFrames={durationInFramesScene}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  fontSize: 50,
-                  color: "#aaaaaa",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {scene.text}
-              </div>
-
-              {/* Nếu script TTS đã tạo ra Audio URL, load nó vào Sequence để đồng bộ */}
+              <SceneComponent scene={scene} />
               {scene.audioUrl && (
                  <Audio src={staticFile(scene.audioUrl)} />
               )}
@@ -91,36 +152,30 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
   );
 };
 
-// Cấu hình Thượng tầng hệ thống Remotion
 export const RemotionRoot: React.FC = () => {
-  const FPS = 30; // Cấu hình 30fps tối ưu tài nguyên máy ảo render năm 2026
+  const FPS = 30;
 
   return (
     <>
       <Composition
-        id="MyComposition" // ID phải khớp chính xác với lệnh gọi trong package.json
+        id="MyComposition"
         component={MainVideo}
         fps={FPS}
-        width={1920}  // Độ phân giải Ngang chuẩn bài giảng (Đổi thành 1080 nếu làm Shorts)
-        height={1080} // Độ phân giải Dọc chuẩn bài giảng (Đổi thành 1920 nếu làm Shorts)
-        
-        // Khối logic dynamic frame: Tự động tính độ dài video dựa trên tổng durationInSeconds của JSON
+        width={1920}
+        height={1080}
         calculateMetadata={async ({ props }) => {
           const inputProps = props as LessonProps;
           
-          // Tính tổng số giây của tất cả các scene cộng lại
           const totalSeconds = inputProps?.scenes?.reduce(
             (acc, scene) => acc + (scene.durationInSeconds || 0), 
             0
-          ) || 10; // Mặc định 10 giây nếu data lỗi
+          ) || 10;
           
           return {
-            durationInFrames: Math.ceil(totalSeconds * FPS), // Chuyển đổi giây sang số Frames thực tế
-            props: inputProps, // Chuyển tiếp dữ liệu sạch vào Component hiển thị
+            durationInFrames: Math.ceil(totalSeconds * FPS),
+            props: inputProps,
           };
         }}
-
-        // Data dự phòng khi chạy dev mode không truyền tham số props
         defaultProps={{
           lessonTitle: "Giới thiệu về Remotion",
           scenes: [
@@ -136,5 +191,4 @@ export const RemotionRoot: React.FC = () => {
   );
 };
 
-// Đăng ký Root component với Remotion Engine để CLI tìm thấy điểm khởi chạy
 registerRoot(RemotionRoot);

@@ -9,10 +9,11 @@ import {
   interpolate,
   interpolateColors,
   useCurrentFrame,
+  delayRender,
+  continueRender
 } from "remotion";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
-import React from "react";
-import { Lottie } from "@remotion/lottie";
+import React, { useState, useEffect } from "react";
 
 // Nếu có skia, có thể import nhưng vì font custom đơn giản nên ta có thể dùng CSS filter text-stroke hoặc shadow
 // Tuy nhiên yêu cầu sử dụng Skia cho typography hoạt hình.
@@ -41,8 +42,19 @@ const AudioReactiveText: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Audio reactive
+  // CODE CHUẨN (Bắt buộc phải có delayRender)
+  const [handle] = useState(() => delayRender("Đang tải dữ liệu âm thanh..."));
   const audioData = useAudioData(audioUrl ? staticFile(audioUrl) : "");
+
+  useEffect(() => {
+    if (!audioUrl) {
+      continueRender(handle);
+      return;
+    }
+    if (audioData) {
+      continueRender(handle); // Chỉ cho phép render tiếp khi audio đã load xong
+    }
+  }, [audioData, handle, audioUrl]);
 
   let scale = 1;
   let glow = 0;
@@ -131,7 +143,7 @@ const SceneComponent: React.FC<{ scene: Scene }> = ({ scene }) => {
 };
 
 // Decorate sticker using pure CSS to avoid missing Lottie JSONs
-const DecoratorSticker: React.FC<{ delay: number; style?: React.CSSProperties }> = ({ delay, style }) => {
+const DecoratorSticker: React.FC<{ delay: number; emoji: string; style?: React.CSSProperties }> = ({ delay, emoji, style }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -147,11 +159,11 @@ const DecoratorSticker: React.FC<{ delay: number; style?: React.CSSProperties }>
   return (
     <div style={{
       position: "absolute",
-      fontSize: 80,
+      fontSize: 100,
       transform: `scale(${scale}) rotate(${rotation}deg)`,
       ...style
     }}>
-      ✨
+      {emoji}
     </div>
   );
 };
@@ -161,12 +173,12 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  // Đổi màu nền sặc sỡ
+  // Đổi màu nền sặc sỡ (Tone màu biển sâu vui tươi)
   const bgProgress = (frame % (fps * 10)) / (fps * 10); // Loop every 10s
   const backgroundColor = interpolateColors(
     bgProgress,
     [0, 0.33, 0.66, 1],
-    ["#1a2a6c", "#b21f1f", "#fdbb2d", "#1a2a6c"]
+    ["#0f4c75", "#3282b8", "#1b262c", "#0f4c75"]
   );
 
   let currentStartFrame = 0;
@@ -182,9 +194,10 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
         fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       }}
     >
-      <DecoratorSticker delay={10} style={{ top: 50, left: 100 }} />
-      <DecoratorSticker delay={30} style={{ bottom: 100, right: 150 }} />
-      <DecoratorSticker delay={50} style={{ top: 200, right: 100 }} />
+      <DecoratorSticker delay={10} emoji="🦈" style={{ top: 100, left: 100 }} />
+      <DecoratorSticker delay={30} emoji="🐢" style={{ bottom: 150, right: 150 }} />
+      <DecoratorSticker delay={50} emoji="🐙" style={{ top: 200, right: 100 }} />
+      <DecoratorSticker delay={90} emoji="🦀" style={{ bottom: 100, left: 200 }} />
 
       {/* Tiêu đề xịn xò */}
       <div style={{
@@ -196,7 +209,7 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
         <h1 style={{
           margin: 0,
           fontSize: 70,
-          background: "-webkit-linear-gradient(#f1c40f, #e74c3c)",
+          background: "-webkit-linear-gradient(#00f2fe, #4facfe)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           filter: "drop-shadow(3px 5px 2px rgba(0,0,0,0.5))",
@@ -214,7 +227,7 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
         }}
       >
         {scenes.map((scene) => {
-          const durationInFramesScene = Math.floor(scene.durationInSeconds * fps);
+          const durationInFramesScene = Math.floor((scene.durationInSeconds || 5) * fps);
           const startFrame = currentStartFrame;
           currentStartFrame += durationInFramesScene;
 
@@ -261,7 +274,7 @@ export const RemotionRoot: React.FC = () => {
           };
         }}
         defaultProps={{
-          lessonTitle: "Giới thiệu về Remotion",
+          lessonTitle: "Khám Phá Đại Dương Cùng Cá Mập Nhỏ",
           scenes: [
             {
               id: "default_scene",

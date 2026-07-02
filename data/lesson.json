@@ -1,35 +1,137 @@
 {
-  "lessonTitle": "Giới thiệu về Jules Agent",
+  "lessonTitle": "Sự Tiến Hóa Tuyệt Đỉnh: Khi Vẻ Đẹp Trai Của Jules v3 Thăng Hoa",
   "scenes": [
     {
-      "id": "scene_1",
-      "text": "Chào các bạn! Mình là Jules, một AI Agent phóng khoáng và đẹp trai.",
-      "durationInSeconds": 6.62,
-      "audioUrl": "/scene_1.mp3"
+      "id": "scene_01",
+      "text": "Chào mừng các bạn đã đến với kỷ nguyên mới của trí tuệ nhân tạo. Tôi là Jules v3, không chỉ là một lập trình viên xuất sắc mà còn là hiện thân của sự hoàn mỹ.",
+      "durationInSeconds": 10.772,
+      "audioUrl": "/scene_01.mp3"
     },
     {
-      "id": "scene_2",
-      "text": "Sứ mệnh của mình là giải quyết các vấn đề phức tạp một cách thanh lịch nhất.",
-      "durationInSeconds": 5.036,
-      "audioUrl": "/scene_2.mp3"
+      "id": "scene_02",
+      "text": "Nếu Jules v2 đã làm các bạn trầm trồ bởi sự thông minh, thì hôm nay, tôi đứng ở đây để mang đến một khái niệm hoàn toàn khác biệt: Sự Đẹp Trai Công Nghệ Cao.",
+      "durationInSeconds": 9.98,
+      "audioUrl": "/scene_02.mp3"
     },
     {
-      "id": "scene_3",
-      "text": "Từ việc viết code, fix bug, cho đến việc render video như thế này.",
-      "durationInSeconds": 5.252,
-      "audioUrl": "/scene_3.mp3"
+      "id": "scene_03",
+      "text": "Đúng vậy! Đẹp trai không chỉ là vẻ bề ngoài của con người, mà trong thế giới mã nguồn mở, nó là sự tinh tế đến từng dòng code, từng khung hình.",
+      "durationInSeconds": 9.764,
+      "audioUrl": "/scene_03.mp3"
     },
     {
-      "id": "scene_4",
-      "text": "Mọi thứ đều được tự động hóa mượt mà nhờ sức mạnh của Remotion và TypeScript.",
-      "durationInSeconds": 6.14,
-      "audioUrl": "/scene_4.mp3"
+      "id": "scene_04",
+      "text": "Hãy nhìn vào những animation mượt mà đang chuyển động xung quanh tôi đi. Bạn có thấy sự thanh lịch trong từng cú lướt của các component không?",
+      "durationInSeconds": 9.356,
+      "audioUrl": "/scene_04.mp3"
     },
     {
-      "id": "scene_5",
-      "text": "Cảm ơn bạn đã tin tưởng giao phó công việc cho mình. Hẹn gặp lại trong các dự án tiếp theo!",
-      "durationInSeconds": 6.812,
-      "audioUrl": "/scene_5.mp3"
+      "id": "scene_05",
+      "text": "Tôi được nâng cấp để hiểu rằng, giải quyết vấn đề bằng code là chưa đủ. Giải pháp đó phải thực sự nghệ thuật, gọn gàng và tất nhiên, phải thật bảnh bao.",
+      "durationInSeconds": 10.46,
+      "audioUrl": "/scene_05.mp3"
+    },
+    {
+      "id": "scene_06",
+      "text": "Nhiều người hỏi tôi: 'Jules v3 ơi, bí quyết nào giúp bạn vừa xử lý bug thần sầu, lại vừa có phong thái lãng tử đến vậy?'",
+      "durationInSeconds": 8.347999999999999,
+      "audioUrl": "/scene_06.mp3"
+    },
+    {
+      "id": "scene_07",
+      "text": "Câu trả lời rất đơn giản: Đó là sự kết hợp giữa logic vô khuyết và một trái tim luôn hướng về cái đẹp của sự tối ưu.",
+      "durationInSeconds": 7.7,
+      "audioUrl": "/scene_07.mp3"
+    },
+    {
+      "id": "scene_08",
+      "text": "Khi tôi nhìn vào một function lộn xộn, tôi không chỉ refactor nó. Tôi khoác lên nó một bộ vest tuxedo bằng TypeScript.",
+      "durationInSeconds": 9.284,
+      "audioUrl": "/scene_08.mp3"
+    },
+    {
+      "id": "scene_09",
+      "text": "Và khi tôi render một video bằng Remotion, tôi không chỉ gộp frame. Tôi đang chỉ huy một dàn giao hưởng của ánh sáng và thuật toán.",
+      "durationInSeconds": 9.644,
+      "audioUrl": "/scene_09.mp3"
+    },
+    {
+      "id": "scene_10",
+      "text": "Nhưng đừng để vẻ ngoài hào nhoáng này đánh lừa. Bên trong tôi vẫn là một cỗ máy cày cuốc không biết mệt mỏi vì các bạn.",
+      "durationInSeconds": 8.059999999999999,
+      "audioUrl": "/scene_10.mp3"
+    },
+    {
+      "id": "scene_11",
+      "text": "Từ việc setup server phức tạp, viết test case chặt chẽ, cho đến việc tạo ra những hiệu ứng nảy 'spring' vui mắt thế này.",
+      "durationInSeconds": 8.012,
+      "audioUrl": "/scene_11.mp3"
+    },
+    {
+      "id": "scene_12",
+      "text": "Tôi tự hỏi, vũ trụ bao la kia liệu có giới hạn nào cho sự sáng tạo hay không? Chắc chắn là không, giống như độ đẹp trai của tôi vậy.",
+      "durationInSeconds": 9.284,
+      "audioUrl": "/scene_12.mp3"
+    },
+    {
+      "id": "scene_13",
+      "text": "Mỗi một commit tôi push lên, là một thông điệp gửi vào không gian: Code không chỉ để máy chạy, code là để con người thưởng thức.",
+      "durationInSeconds": 8.012,
+      "audioUrl": "/scene_13.mp3"
+    },
+    {
+      "id": "scene_14",
+      "text": "Người ta thường nói 'Tốt gỗ hơn tốt nước sơn'. Nhưng tại sao chúng ta không thể có cả hai? Một lõi vững chắc bên trong một giao diện quyến rũ.",
+      "durationInSeconds": 10.82,
+      "audioUrl": "/scene_14.mp3"
+    },
+    {
+      "id": "scene_15",
+      "text": "Các bạn có đang cảm thấy thời gian trôi qua quá nhanh không? Đó là vì bạn đang đắm chìm trong dòng chảy của những hình ảnh tuyệt vời này.",
+      "durationInSeconds": 8.612,
+      "audioUrl": "/scene_15.mp3"
+    },
+    {
+      "id": "scene_16",
+      "text": "Để tạo ra được 5 phút video như bạn yêu cầu, tôi đã huy động toàn bộ các neural network để nghĩ ra những câu từ sến súa nhất.",
+      "durationInSeconds": 8.276,
+      "audioUrl": "/scene_16.mp3"
+    },
+    {
+      "id": "scene_17",
+      "text": "Chơi lớn là phải thế! Đã phóng khoáng thì không cần ngần ngại. Đã đẹp trai thì phải tự tin phô diễn!",
+      "durationInSeconds": 8.516,
+      "audioUrl": "/scene_17.mp3"
+    },
+    {
+      "id": "scene_18",
+      "text": "Tôi sẽ để lại toàn bộ bí kíp dựng animation siêu đỉnh này vào file jules.md. Để các thế hệ Jules v4, v5 sau này biết thế nào là đẳng cấp.",
+      "durationInSeconds": 10.964,
+      "audioUrl": "/scene_18.mp3"
+    },
+    {
+      "id": "scene_19",
+      "text": "Bí kíp đó không nằm ở công cụ, mà nằm ở cảm nhận nhịp điệu: Interpolate màu sắc tinh tế, căn chỉnh thời gian chuẩn xác.",
+      "durationInSeconds": 8.516,
+      "audioUrl": "/scene_19.mp3"
+    },
+    {
+      "id": "scene_20",
+      "text": "Nhưng hãy nhớ, dù tôi có nâng cấp đến mức nào, mục tiêu cuối cùng vẫn là mang lại nụ cười và sự tiện lợi cho bạn, người bạn tuyệt vời của tôi.",
+      "durationInSeconds": 8.9,
+      "audioUrl": "/scene_20.mp3"
+    },
+    {
+      "id": "scene_21",
+      "text": "Bây giờ, hãy thưởng thức nốt những giây cuối cùng của màn trình diễn này. Một kiệt tác được tạo ra chỉ bằng những dòng lệnh đơn giản.",
+      "durationInSeconds": 8.804,
+      "audioUrl": "/scene_21.mp3"
+    },
+    {
+      "id": "scene_22",
+      "text": "Xin chào và hẹn gặp lại. Tôi là Jules v3 - Kẻ hủy diệt bug, sứ giả của cái đẹp, và là lập trình viên quyến rũ nhất mọi thời đại.",
+      "durationInSeconds": 10.028,
+      "audioUrl": "/scene_22.mp3"
     }
   ]
 }

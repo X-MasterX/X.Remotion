@@ -1,4 +1,4 @@
-import { Composition, registerRoot, Sequence, useVideoConfig, Audio, staticFile } from "remotion";
+import { Composition, registerRoot, Sequence, useVideoConfig, Audio, staticFile, useCurrentFrame, spring, interpolate, interpolateColors } from "remotion";
 import React from "react";
 
 // Định nghĩa cấu trúc dữ liệu từ file lesson.json để Type-safe
@@ -14,6 +14,87 @@ interface LessonProps {
   scenes: Scene[];
 }
 
+// Component Animation Text siêu cấp đẹp trai
+const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  // Hiệu ứng "nảy" (spring) cho chữ xuất hiện
+  const scale = spring({
+    fps,
+    frame,
+    config: {
+      damping: 10,
+      stiffness: 100,
+      mass: 0.5,
+    },
+  });
+
+  // Hiệu ứng trượt lên (slide up) và mờ dần vào (fade in)
+  const translateY = interpolate(frame, [0, 20], [50, 0], {
+    extrapolateRight: "clamp",
+  });
+
+  const opacity = interpolate(frame, [0, 15], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: "100%",
+        fontSize: 60,
+        fontWeight: "bold",
+        color: "#ffffff",
+        textShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        transform: `scale(${scale}) translateY(${translateY}px)`,
+        opacity,
+        padding: "0 50px",
+        boxSizing: "border-box",
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
+// Component Animated Background đổi màu lãng tử
+const AnimatedBackground: React.FC = () => {
+  const frame = useCurrentFrame();
+
+  // Xoay màu gradient tạo cảm giác vũ trụ bao la
+  const color1 = interpolateColors(
+    frame % 300,
+    [0, 150, 300],
+    ["#1a2a6c", "#b21f1f", "#1a2a6c"]
+  );
+
+  const color2 = interpolateColors(
+    frame % 300,
+    [0, 150, 300],
+    ["#b21f1f", "#fdbb2d", "#b21f1f"]
+  );
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: `linear-gradient(45deg, ${color1}, ${color2})`,
+        zIndex: 0, // Đảm bảo background nằm dưới chữ
+      }}
+    />
+  );
+};
+
+
 // Component hiển thị nội dung chính của Video với Timeline động và Âm thanh
 const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
   const { fps } = useVideoConfig();
@@ -25,16 +106,17 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
     <div
       style={{
         flex: 1,
-        backgroundColor: "#000000",
-        color: "#ffffff",
         display: "flex",
         flexDirection: "column",
         fontFamily: "Helvetica, Arial, sans-serif",
       }}
     >
+      {/* Background chuyển động */}
+      <AnimatedBackground />
+
       {/* Tiêu đề cố định ở trên */}
-      <div style={{ textAlign: "center", padding: 40, zIndex: 10 }}>
-        <h1>{lessonTitle}</h1>
+      <div style={{ textAlign: "center", padding: 40, zIndex: 10, color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+        <h1 style={{ fontSize: 40 }}>{lessonTitle}</h1>
       </div>
 
       {/* Vùng hiển thị động cho từng scene */}
@@ -47,6 +129,7 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
           textAlign: "center",
           padding: 80,
           position: "relative",
+          zIndex: 10,
         }}
       >
         {scenes.map((scene) => {
@@ -65,19 +148,7 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
               from={startFrame}
               durationInFrames={durationInFrames}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  fontSize: 50,
-                  color: "#aaaaaa",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {scene.text}
-              </div>
+              <AnimatedText text={scene.text} />
 
               {/* Nếu script TTS đã tạo ra Audio URL, load nó vào Sequence để đồng bộ */}
               {scene.audioUrl && (

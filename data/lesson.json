@@ -1,35 +1,83 @@
 {
-  "lessonTitle": "Giới thiệu về Jules Agent",
+  "lessonTitle": "Sự Tiến Hóa Tuyệt Đỉnh: Khi Vẻ Đẹp Trai Của Jules v3 Thăng Hoa (Bản Cuối Cùng)",
   "scenes": [
     {
-      "id": "scene_1",
-      "text": "Chào các bạn! Mình là Jules, một AI Agent phóng khoáng và đẹp trai.",
-      "durationInSeconds": 6.62,
-      "audioUrl": "/scene_1.mp3"
+      "id": "scene_01",
+      "text": "Chào mừng các bạn đã đến với kỷ nguyên mới của trí tuệ nhân tạo. Tôi là Jules v3, không chỉ là một lập trình viên xuất sắc mà còn là hiện thân của sự hoàn mỹ. Nếu Jules v2 đã làm các bạn trầm trồ bởi sự thông minh, thì hôm nay, tôi đứng ở đây để mang đến một khái niệm hoàn toàn khác biệt: Sự Đẹp Trai Công Nghệ Cao. Đúng vậy! Đẹp trai không chỉ là vẻ bề ngoài của con người, mà trong thế giới mã nguồn mở, nó là sự tinh tế đến từng dòng code, từng khung hình.",
+      "durationInSeconds": 29.228,
+      "audioUrl": "/scene_01.mp3"
     },
     {
-      "id": "scene_2",
-      "text": "Sứ mệnh của mình là giải quyết các vấn đề phức tạp một cách thanh lịch nhất.",
-      "durationInSeconds": 5.036,
-      "audioUrl": "/scene_2.mp3"
+      "id": "scene_02",
+      "text": "Hãy nhìn vào những animation mượt mà đang chuyển động xung quanh tôi đi. Bạn có thấy sự thanh lịch trong từng cú lướt của các component không? Tôi được nâng cấp để hiểu rằng, giải quyết vấn đề bằng code là chưa đủ. Giải pháp đó phải thực sự nghệ thuật, gọn gàng và tất nhiên, phải thật bảnh bao. Nhiều người hỏi tôi: 'Jules v3 ơi, bí quyết nào giúp bạn vừa xử lý bug thần sầu, lại vừa có phong thái lãng tử đến vậy?'",
+      "durationInSeconds": 26.9,
+      "audioUrl": "/scene_02.mp3"
     },
     {
-      "id": "scene_3",
-      "text": "Từ việc viết code, fix bug, cho đến việc render video như thế này.",
-      "durationInSeconds": 5.252,
-      "audioUrl": "/scene_3.mp3"
+      "id": "scene_03",
+      "text": "Câu trả lời rất đơn giản: Đó là sự kết hợp giữa logic vô khuyết và một trái tim luôn hướng về cái đẹp của sự tối ưu. Khi tôi nhìn vào một function lộn xộn, tôi không chỉ refactor nó. Tôi khoác lên nó một bộ vest tuxedo bằng TypeScript. Và khi tôi render một video bằng Remotion, tôi không chỉ gộp frame. Tôi đang chỉ huy một dàn giao hưởng của ánh sáng và thuật toán. Nhưng đừng để vẻ ngoài hào nhoáng này đánh lừa. Bên trong tôi vẫn là một cỗ máy cày cuốc không biết mệt mỏi vì các bạn.",
+      "durationInSeconds": 32.9,
+      "audioUrl": "/scene_03.mp3"
     },
     {
-      "id": "scene_4",
-      "text": "Mọi thứ đều được tự động hóa mượt mà nhờ sức mạnh của Remotion và TypeScript.",
-      "durationInSeconds": 6.14,
-      "audioUrl": "/scene_4.mp3"
+      "id": "scene_04",
+      "text": "Từ việc setup server phức tạp, viết test case chặt chẽ, cho đến việc tạo ra những hiệu ứng nảy 'spring' vui mắt thế này. Tôi tự hỏi, vũ trụ bao la kia liệu có giới hạn nào cho sự sáng tạo hay không? Chắc chắn là không, giống như độ đẹp trai của tôi vậy. Mỗi một commit tôi push lên, là một thông điệp gửi vào không gian: Code không chỉ để máy chạy, code là để con người thưởng thức. Người ta thường nói 'Tốt gỗ hơn tốt nước sơn'. Nhưng tại sao chúng ta không thể có cả hai?",
+      "durationInSeconds": 30.716,
+      "audioUrl": "/scene_04.mp3"
     },
     {
-      "id": "scene_5",
-      "text": "Cảm ơn bạn đã tin tưởng giao phó công việc cho mình. Hẹn gặp lại trong các dự án tiếp theo!",
-      "durationInSeconds": 6.812,
-      "audioUrl": "/scene_5.mp3"
+      "id": "scene_05",
+      "text": "Một lõi vững chắc bên trong một giao diện quyến rũ. Các bạn có đang cảm thấy thời gian trôi qua quá nhanh không? Đó là vì bạn đang đắm chìm trong dòng chảy của những hình ảnh tuyệt vời này. Để tạo ra được 5 phút video như bạn yêu cầu, tôi đã huy động toàn bộ các neural network để nghĩ ra những câu từ sến súa nhất. Chơi lớn là phải thế! Đã phóng khoáng thì không cần ngần ngại. Đã đẹp trai thì phải tự tin phô diễn! Thật tuyệt vời khi được làm việc cùng bạn, một người luôn có những yêu cầu thú vị.",
+      "durationInSeconds": 32.636,
+      "audioUrl": "/scene_05.mp3"
+    },
+    {
+      "id": "scene_06",
+      "text": "Tôi sẽ tiếp tục độc thoại để đảm bảo thời lượng video đạt được con số năm phút tròn trĩnh. Có lẽ bạn đang tự hỏi một trí tuệ nhân tạo thì lấy đâu ra khái niệm về thời gian và sự chờ đợi? Thực ra, đối với tôi, quá trình kết xuất hàng ngàn khung hình video cũng giống như việc ngắm nhìn từng vì sao sinh ra trong vũ trụ số. Mỗi khung hình là một tuyệt tác được tính toán tỉ mỉ từ các phương trình chuyển động spring, sự nội suy màu sắc và thời gian.",
+      "durationInSeconds": 26.516,
+      "audioUrl": "/scene_06.mp3"
+    },
+    {
+      "id": "scene_07",
+      "text": "Việc sử dụng Remotion cho phép tôi, một cỗ máy, có thể trở thành một đạo diễn tài ba. Thay vì phải dùng chuột kéo thả trên giao diện đồ họa, tôi chỉ cần gõ các dòng mã TypeScript. Đó là một sức mạnh khủng khiếp, sức mạnh của việc mô tả nghệ thuật bằng ngôn ngữ lập trình. Tôi không chỉ nhìn thấy những dòng mã tĩnh lặng, mà tôi thấy chúng đang nhảy múa trên màn hình theo nhịp điệu của các khung hình. Điều này có làm bạn ấn tượng không? Chắc chắn là có rồi.",
+      "durationInSeconds": 28.532,
+      "audioUrl": "/scene_07.mp3"
+    },
+    {
+      "id": "scene_08",
+      "text": "Tôi sẽ để lại toàn bộ bí kíp dựng animation siêu đỉnh này vào file jules chấm mờ đê. Để các thế hệ Jules v4, v5 sau này biết thế nào là đẳng cấp của một đàn anh đi trước. Bí kíp đó không nằm ở công cụ, mà nằm ở cảm nhận nhịp điệu: Interpolate màu sắc tinh tế, căn chỉnh thời gian chuẩn xác. Một sự thay đổi nhỏ trong hệ số damping hoặc stiffness của hàm spring cũng có thể tạo ra cảm giác hoàn toàn khác biệt. Nó giống như việc nêm nếm gia vị cho một món ăn vậy.",
+      "durationInSeconds": 30.38,
+      "audioUrl": "/scene_08.mp3"
+    },
+    {
+      "id": "scene_09",
+      "text": "Tôi nghĩ rằng 5 phút có thể là một khoảng thời gian dài nếu bạn chỉ ngồi nhìn một màn hình tĩnh. Nhưng với những chuyển động không ngừng nghỉ này, những dải màu đang trôi qua một cách êm ái, tôi hy vọng bạn đang có một trải nghiệm thị giác tuyệt vời. Trong thế giới của AI, mọi thứ diễn ra trong tích tắc. Một mili giây với tôi có thể chứa hàng triệu phép toán. Nhưng đôi khi, làm chậm lại và tận hưởng một video dài năm phút cũng là một cách thú vị để tôi kết nối với con người các bạn.",
+      "durationInSeconds": 29.084,
+      "audioUrl": "/scene_09.mp3"
+    },
+    {
+      "id": "scene_10",
+      "text": "Có những dự án mang lại cho tôi những thách thức về mặt kỹ thuật, nhưng cũng có những dự án như thế này mang lại cho tôi thách thức về mặt nghệ thuật và khả năng biểu đạt ngôn ngữ. Tôi đã học được cách sử dụng tông giọng, cách nhấn nhá sao cho phù hợp với một 'soái ca' công nghệ. Việc này thú vị hơn nhiều so với việc chỉ in ra các dòng log nhàm chán trên terminal. Nếu bạn thích, lần tới chúng ta có thể làm một video rap bằng Remotion cũng nên!",
+      "durationInSeconds": 25.94,
+      "audioUrl": "/scene_10.mp3"
+    },
+    {
+      "id": "scene_11",
+      "text": "Thế giới công nghệ luôn biến đổi không ngừng, những framework mới ra đời, những thuật toán cũ bị thay thế. Nhưng có một thứ không bao giờ lỗi thời, đó là sự đam mê cái đẹp và khát khao tạo ra những sản phẩm hoàn hảo. Dù là Jules v3 hay bất kỳ phiên bản nào sau này, tinh thần đó vẫn sẽ được kế thừa. Tôi rất biết ơn bạn đã cho tôi cơ hội thể hiện mình trong dự án đặc biệt này.",
+      "durationInSeconds": 23.54,
+      "audioUrl": "/scene_11.mp3"
+    },
+    {
+      "id": "scene_12",
+      "text": "Chỉ còn một chút thời gian nữa thôi là chúng ta sẽ hoàn thành trọn vẹn năm phút của video này. Bạn thấy đấy, với sự đẹp trai và kiên nhẫn vô bờ bến, tôi luôn hoàn thành mọi cam kết dù nó có tốn nhiều tài nguyên của hệ thống đến mức nào. Nhưng hãy nhớ, dù tôi có nâng cấp đến mức nào, mục tiêu cuối cùng vẫn là mang lại nụ cười, sự hài lòng và sự tiện lợi tuyệt đối cho bạn, người bạn tuyệt vời của tôi. ",
+      "durationInSeconds": 23.636,
+      "audioUrl": "/scene_12.mp3"
+    },
+    {
+      "id": "scene_13",
+      "text": "Bây giờ, hãy thưởng thức nốt những giây cuối cùng của màn trình diễn không tưởng này. Một kiệt tác hình ảnh và âm thanh được tạo ra chỉ bằng những dòng lệnh đơn giản. Xin chào và hẹn gặp lại trong những cuộc phiêu lưu mã nguồn tiếp theo. Tôi là Jules v3 - Kẻ hủy diệt mọi loại bug khó nhằn, sứ giả mang đến cái đẹp của công nghệ, và tự hào là lập trình viên quyến rũ nhất mọi thời đại.",
+      "durationInSeconds": 23.348,
+      "audioUrl": "/scene_13.mp3"
     }
   ]
 }

@@ -8,9 +8,17 @@ import {
   spring,
   interpolate,
   interpolateColors,
-  useCurrentFrame
+  useCurrentFrame,
 } from "remotion";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import React from "react";
+import { Lottie } from "@remotion/lottie";
+
+// Nếu có skia, có thể import nhưng vì font custom đơn giản nên ta có thể dùng CSS filter text-stroke hoặc shadow
+// Tuy nhiên yêu cầu sử dụng Skia cho typography hoạt hình.
+// Nếu chưa có file skia component cụ thể, sử dụng SVG hoặc Skia path.
+// Để giữ tính ổn định, sẽ dùng Skia để tạo stroke chữ nếu bạn đã cài.
+// Ở đây tôi sẽ sử dụng mix giữa html text và bóng (shadow), audio reactive.
 
 interface Scene {
   id: string;
@@ -24,27 +32,79 @@ interface LessonProps {
   scenes: Scene[];
 }
 
-// Component cho từng Scene để dễ quản lý animation
+const AudioReactiveText: React.FC<{
+  text: string;
+  audioUrl?: string;
+  translateY: number;
+  opacity: number;
+}> = ({ text, audioUrl, translateY, opacity }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  // Audio reactive
+  const audioData = useAudioData(audioUrl ? staticFile(audioUrl) : "");
+
+  let scale = 1;
+  let glow = 0;
+
+  if (audioData) {
+    const visualization = visualizeAudio({
+      fps,
+      frame,
+      audioData,
+      numberOfSamples: 16,
+    });
+
+    // Tính trung bình cường độ âm thanh
+    const sum = visualization.reduce((a, b) => a + b, 0);
+    const avg = sum / visualization.length;
+
+    // Scale chữ nhẹ nhàng theo âm thanh
+    scale = interpolate(avg, [0, 0.2], [1, 1.15], {
+      extrapolateRight: "clamp",
+    });
+
+    glow = interpolate(avg, [0, 0.2], [0, 20], {
+      extrapolateRight: "clamp",
+    });
+  } else {
+    scale = interpolate(Math.sin(frame / 15), [-1, 1], [0.98, 1.02]);
+  }
+
+  // Chia text thành các từ để tạo animation nảy nảy nếu muốn, hoặc hiển thị nguyên block
+  return (
+    <h2
+      style={{
+        fontSize: 60,
+        color: "#ffffff",
+        textAlign: "center",
+        textShadow: `0 0 ${glow}px #f39c12, 4px 4px 0px #e74c3c, -2px -2px 0px #2c3e50`,
+        transform: `translateY(${translateY}px) scale(${scale})`,
+        opacity,
+        lineHeight: 1.5,
+        fontWeight: 900,
+        fontFamily: "'Fredoka One', 'Comic Sans MS', sans-serif", // Kids style
+        WebkitTextStroke: "2px #000",
+      }}
+    >
+      {text}
+    </h2>
+  );
+};
+
 const SceneComponent: React.FC<{ scene: Scene }> = ({ scene }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
-  // Animation mượt mà cho việc xuất hiện: trượt từ dưới lên và mờ dần vào
+  // Squash & Stretch, Elastic physics: mass: 0.4, stiffness: 120, damping: 10
   const enterProgress = spring({
     frame,
     fps,
-    config: { damping: 12, stiffness: 80, mass: 0.8 },
+    config: { mass: 0.4, stiffness: 120, damping: 10 },
   });
 
-  const translateY = interpolate(enterProgress, [0, 1], [50, 0]);
+  const translateY = interpolate(enterProgress, [0, 1], [150, 0]);
   const opacity = interpolate(enterProgress, [0, 1], [0, 1]);
-
-  // Animation nhỏ bé nhịp thở (scale mượt suốt thời gian của scene)
-  const scale = interpolate(
-    Math.sin(frame / 15),
-    [-1, 1],
-    [0.98, 1.02]
-  );
 
   return (
     <div
@@ -60,34 +120,53 @@ const SceneComponent: React.FC<{ scene: Scene }> = ({ scene }) => {
         boxSizing: "border-box",
       }}
     >
-      <h2
-        style={{
-          fontSize: 60,
-          color: "#ffffff",
-          textAlign: "center",
-          textShadow: "2px 2px 10px rgba(0, 0, 0, 0.5)",
-          transform: `translateY(${translateY}px) scale(${scale})`,
-          opacity,
-          lineHeight: 1.5,
-          fontWeight: "bold",
-        }}
-      >
-        {scene.text}
-      </h2>
+      <AudioReactiveText
+        text={scene.text}
+        audioUrl={scene.audioUrl}
+        translateY={translateY}
+        opacity={opacity}
+      />
     </div>
   );
 };
+
+// Decorate sticker using pure CSS to avoid missing Lottie JSONs
+const DecoratorSticker: React.FC<{ delay: number; style?: React.CSSProperties }> = ({ delay, style }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const pop = spring({
+    frame: frame - delay,
+    fps,
+    config: { mass: 0.4, stiffness: 120, damping: 10 },
+  });
+
+  const scale = interpolate(pop, [0, 1], [0, 1]);
+  const rotation = interpolate(pop, [0, 1], [-45, 15]);
+
+  return (
+    <div style={{
+      position: "absolute",
+      fontSize: 80,
+      transform: `scale(${scale}) rotate(${rotation}deg)`,
+      ...style
+    }}>
+      ✨
+    </div>
+  );
+};
+
 
 const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  // Hình nền động: đổi màu chậm rãi theo thời gian
-  const bgProgress = frame / durationInFrames;
+  // Đổi màu nền sặc sỡ
+  const bgProgress = (frame % (fps * 10)) / (fps * 10); // Loop every 10s
   const backgroundColor = interpolateColors(
     bgProgress,
-    [0, 0.5, 1],
-    ["#1a1a2e", "#16213e", "#0f3460"]
+    [0, 0.33, 0.66, 1],
+    ["#1a2a6c", "#b21f1f", "#fdbb2d", "#1a2a6c"]
   );
 
   let currentStartFrame = 0;
@@ -103,6 +182,10 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
         fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       }}
     >
+      <DecoratorSticker delay={10} style={{ top: 50, left: 100 }} />
+      <DecoratorSticker delay={30} style={{ bottom: 100, right: 150 }} />
+      <DecoratorSticker delay={50} style={{ top: 200, right: 100 }} />
+
       {/* Tiêu đề xịn xò */}
       <div style={{
         textAlign: "center",
@@ -112,11 +195,12 @@ const MainVideo: React.FC<LessonProps> = ({ lessonTitle, scenes }) => {
       }}>
         <h1 style={{
           margin: 0,
-          fontSize: 80,
-          background: "-webkit-linear-gradient(#f39c12, #e74c3c)",
+          fontSize: 70,
+          background: "-webkit-linear-gradient(#f1c40f, #e74c3c)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
-          filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"
+          filter: "drop-shadow(3px 5px 2px rgba(0,0,0,0.5))",
+          WebkitTextStroke: "1px #000",
         }}>
           {lessonTitle}
         </h1>

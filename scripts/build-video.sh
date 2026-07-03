@@ -52,7 +52,7 @@ echo "Tất cả các chunks đã được render xong. Đang tiến hành hợp
 
 # Sử dụng đường dẫn tương đối trong thư mục public khi dùng ffmpeg
 cd public
-ffmpeg -y -f concat -safe 0 -i inputs.txt -c copy output.mp4
+../node_modules/ffmpeg-static/ffmpeg -y -f concat -safe 0 -i inputs.txt -c copy output.mp4
 cd ..
 
 echo "Video hoàn chỉnh đã được tạo tại public/output.mp4"
